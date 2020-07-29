@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Coin.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200729065643_First")]
-    partial class First
+    [Migration("20200729083319_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace Coin.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Coin.Domain.Entities.Order", b =>

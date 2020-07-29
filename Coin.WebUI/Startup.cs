@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Coin.Data;
 using Coin.Domain.Identity;
+using Coin.Infrastructure.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -55,6 +56,7 @@ namespace Coin.WebUI
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            DependencyContainer.RegisterServices(services);
             services.AddSession();
             services.AddControllersWithViews();
             services.AddSignalR(configure => configure.EnableDetailedErrors = true);

@@ -9,10 +9,8 @@ namespace Coin.Infrastructure.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            //CleanArchitecture.Application
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IProductService, ProductService>();
-
-            // CleanArchitecture.Infrastructure.Data.Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
         }
     }

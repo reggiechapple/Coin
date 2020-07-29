@@ -56,7 +56,7 @@ namespace Coin.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Coin.Domain.Entities.Order", b =>

@@ -9,6 +9,7 @@ using Coin.WebUI.Models;
 
 namespace Coin.WebUI.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,6 +19,7 @@ namespace Coin.WebUI.Controllers
             _logger = logger;
         }
 
+        [HttpGet("~/")]
         public IActionResult Index()
         {
             return View();
