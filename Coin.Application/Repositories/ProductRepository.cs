@@ -1,7 +1,8 @@
 using Coin.Domain.Entities;
-using Coin.Infrastructure.Data.Context;
+using Coin.Data;
+using Coin.Application.Interfaces;
 
-namespace Coin.Infrastructure.Data.Repositories
+namespace Coin.Application.Repositories
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {

@@ -1,10 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Coin.Domain.Interfaces;
-using Coin.Infrastructure.Data.Context;
+using Coin.Data;
 using Microsoft.EntityFrameworkCore;
+using Coin.Application.Interfaces;
 
-namespace Coin.Infrastructure.Data.Repositories
+namespace Coin.Application.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {

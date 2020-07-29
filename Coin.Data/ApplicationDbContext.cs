@@ -2,22 +2,27 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Coin.Domain;
+using Coin.Domain.Entities;
 using Coin.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Coin.Infrastructure.Data.Context
+namespace Coin.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>,IdentityRoleClaim<string>, IdentityUserToken<string>>
-    {   
+    {
         public ApplicationDbContext(DbContextOptions options) : base(options)
-        { 
-            
+        {
         }
 
         public string CurrentUserId { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

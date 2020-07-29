@@ -1,6 +1,6 @@
 using Coin.Application.Interfaces;
 using Coin.Application.Services;
-using Coin.Infrastructure.Data.Repositories;
+using Coin.Application.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Coin.Infrastructure.IoC

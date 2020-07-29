@@ -17,9 +17,6 @@ namespace Coin.Domain.Entities
         public bool Avaliable { get; set; }
         public int Stock { get; set; }
 
-        public long AdministratorId { get; set; }
-        public Administrator Administrator { get; set; }
-
         public long CategoryId { get; set; }
         public virtual Category Category { get; set; }
 

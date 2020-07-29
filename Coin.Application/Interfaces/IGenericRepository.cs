@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Coin.Infrastructure.Data.Repositories
+namespace Coin.Application.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
