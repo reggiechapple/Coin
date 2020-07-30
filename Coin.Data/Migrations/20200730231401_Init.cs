@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Coin.Data.Migrations
 {
-    public partial class Startup : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -219,28 +219,6 @@ namespace Coin.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cosmetologists",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Updated = table.Column<DateTime>(nullable: false),
-                    IdentityId = table.Column<string>(nullable: true),
-                    Slug = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cosmetologists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cosmetologists_AspNetUsers_IdentityId",
-                        column: x => x.IdentityId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
@@ -256,6 +234,28 @@ namespace Coin.Data.Migrations
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityId",
+                        column: x => x.IdentityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialists",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Updated = table.Column<DateTime>(nullable: false),
+                    IdentityId = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Specialists_AspNetUsers_IdentityId",
                         column: x => x.IdentityId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -290,35 +290,6 @@ namespace Coin.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Bookings",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Updated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    ShortDesc = table.Column<string>(nullable: true),
-                    LongDesc = table.Column<string>(nullable: true),
-                    FlatPrice = table.Column<decimal>(nullable: false),
-                    Duration = table.Column<decimal>(nullable: false),
-                    Avaliable = table.Column<bool>(nullable: false),
-                    PayByHour = table.Column<bool>(nullable: false),
-                    HourRate = table.Column<decimal>(nullable: false),
-                    CosmetologistId = table.Column<long>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Cosmetologists_CosmetologistId",
-                        column: x => x.CosmetologistId,
-                        principalTable: "Cosmetologists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Basket",
                 columns: table => new
                 {
@@ -333,30 +304,6 @@ namespace Coin.Data.Migrations
                     table.PrimaryKey("PK_Basket", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Basket_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CosmetologistClients",
-                columns: table => new
-                {
-                    CustomerId = table.Column<long>(nullable: false),
-                    CosmetologistId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CosmetologistClients", x => new { x.CosmetologistId, x.CustomerId });
-                    table.ForeignKey(
-                        name: "FK_CosmetologistClients_Cosmetologists_CosmetologistId",
-                        column: x => x.CosmetologistId,
-                        principalTable: "Cosmetologists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CosmetologistClients_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -388,39 +335,54 @@ namespace Coin.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
+                name: "Bookings",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Created = table.Column<DateTime>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    AppointmentTime = table.Column<DateTime>(nullable: false),
-                    TravellingOut = table.Column<bool>(nullable: false),
-                    Message = table.Column<string>(nullable: true),
-                    BookingId = table.Column<long>(nullable: false),
-                    CustomerId = table.Column<long>(nullable: false),
-                    DestinationId = table.Column<long>(nullable: false)
+                    Name = table.Column<string>(nullable: true),
+                    ShortDesc = table.Column<string>(nullable: true),
+                    LongDesc = table.Column<string>(nullable: true),
+                    FlatPrice = table.Column<decimal>(nullable: false),
+                    Duration = table.Column<decimal>(nullable: false),
+                    Avaliable = table.Column<bool>(nullable: false),
+                    PayByHour = table.Column<bool>(nullable: false),
+                    HourRate = table.Column<decimal>(nullable: false),
+                    SpecialistId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Bookings_BookingId",
-                        column: x => x.BookingId,
-                        principalTable: "Bookings",
+                        name: "FK_Bookings_Specialists_SpecialistId",
+                        column: x => x.SpecialistId,
+                        principalTable: "Specialists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SpecialistClients",
+                columns: table => new
+                {
+                    CustomerId = table.Column<long>(nullable: false),
+                    SpecialistId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpecialistClients", x => new { x.SpecialistId, x.CustomerId });
                     table.ForeignKey(
-                        name: "FK_Appointments_Customers_CustomerId",
+                        name: "FK_SpecialistClients_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Addresses_DestinationId",
-                        column: x => x.DestinationId,
-                        principalTable: "Addresses",
+                        name: "FK_SpecialistClients_Specialists_SpecialistId",
+                        column: x => x.SpecialistId,
+                        principalTable: "Specialists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -459,6 +421,44 @@ namespace Coin.Data.Migrations
                         name: "FK_OrderItem_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Updated = table.Column<DateTime>(nullable: false),
+                    AppointmentTime = table.Column<DateTime>(nullable: false),
+                    TravellingOut = table.Column<bool>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
+                    BookingId = table.Column<long>(nullable: false),
+                    CustomerId = table.Column<long>(nullable: false),
+                    DestinationId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Addresses_DestinationId",
+                        column: x => x.DestinationId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -532,20 +532,9 @@ namespace Coin.Data.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_CosmetologistId",
+                name: "IX_Bookings_SpecialistId",
                 table: "Bookings",
-                column: "CosmetologistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CosmetologistClients_CustomerId",
-                table: "CosmetologistClients",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cosmetologists_IdentityId",
-                table: "Cosmetologists",
-                column: "IdentityId",
-                unique: true);
+                column: "SpecialistId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdentityId",
@@ -577,6 +566,17 @@ namespace Coin.Data.Migrations
                 name: "IX_Product_CategoryId",
                 table: "Product",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SpecialistClients_CustomerId",
+                table: "SpecialistClients",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Specialists_IdentityId",
+                table: "Specialists",
+                column: "IdentityId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -603,10 +603,10 @@ namespace Coin.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CosmetologistClients");
+                name: "OrderItem");
 
             migrationBuilder.DropTable(
-                name: "OrderItem");
+                name: "SpecialistClients");
 
             migrationBuilder.DropTable(
                 name: "Bookings");
@@ -627,7 +627,7 @@ namespace Coin.Data.Migrations
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Cosmetologists");
+                name: "Specialists");
 
             migrationBuilder.DropTable(
                 name: "Customers");

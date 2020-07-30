@@ -3,9 +3,9 @@ using Coin.Domain.Entities;
 
 namespace Coin.Domain.Identity
 {
-    public class Cosmetologist : Profile
+    public class Specialist : Profile
     {
-        public ICollection<CosmetologistClient> Clients { get; set; }
+        public ICollection<SpecialistClient> Clients { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
     }

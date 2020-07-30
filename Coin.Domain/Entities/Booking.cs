@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Coin.Domain.Identity;
 
 namespace Coin.Domain.Entities
 {
@@ -19,6 +20,9 @@ namespace Coin.Domain.Entities
         public bool PayByHour { get; set; }
 
         public decimal HourRate { get; set; }
+
+        public long SpecialistId { get; set; }
+        public Specialist Specialist { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
     }

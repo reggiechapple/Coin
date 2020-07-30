@@ -85,13 +85,16 @@ namespace Coin.WebUI.Web.Areas.Administrators.Controllers
                     };
                     _context.Add(customer);
                     await _context.SaveChangesAsync();
+                }
 
-                    if (customer != null)
+                if (await _userManager.IsInRoleAsync(user, "Cosmetologist"))
+                {
+                    Specialist specialist = new Specialist
                     {
-                        Basket basket = new Basket { CustomerId = customer.Id };
-                        _context.Add(basket);
-                        await _context.SaveChangesAsync();
-                    }
+                        IdentityId = user.Id
+                    };
+                    _context.Add(specialist);
+                    await _context.SaveChangesAsync();
                 }
                 return RedirectToAction(nameof(Index));
             }

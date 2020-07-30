@@ -247,12 +247,6 @@ namespace Coin.WebUI.Controllers
                         _context.Add(customer);
                         await _context.SaveChangesAsync();
 
-                        if (customer != null)
-                        {
-                            Basket basket = new Basket { CustomerId = customer.Id };
-                            _context.Add(basket);
-                            await _context.SaveChangesAsync();
-                        }
                         _logger.LogInformation($"User has successfully been added to role: {role.Name}");
                     }
                     else

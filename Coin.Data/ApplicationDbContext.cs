@@ -18,9 +18,9 @@ namespace Coin.Data
 
         public string CurrentUserId { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
-        public DbSet<Cosmetologist> Cosmetologists { get; set; }
+        public DbSet<Specialist> Specialists { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<CosmetologistClient> CosmetologistClients { get; set; }
+        public DbSet<SpecialistClient> SpecialistClients { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -46,17 +46,17 @@ namespace Coin.Data
                     .IsRequired();
             });
 
-            builder.Entity<CosmetologistClient>(cc =>
+            builder.Entity<SpecialistClient>(cc =>
             {
-                cc.HasKey(ur => new { ur.CosmetologistId, ur.CustomerId });
+                cc.HasKey(ur => new { ur.SpecialistId, ur.CustomerId });
 
-                cc.HasOne(co => co.Cosmetologist)
+                cc.HasOne(co => co.Specialist)
                     .WithMany(cu => cu.Clients)
-                    .HasForeignKey(co => co.CosmetologistId)
+                    .HasForeignKey(co => co.SpecialistId)
                     .IsRequired();
 
                 cc.HasOne(cu => cu.Customer)
-                    .WithMany(co => co.Cosmetologists)
+                    .WithMany(co => co.Specialists)
                     .HasForeignKey(cu => cu.CustomerId)
                     .IsRequired();
             });
