@@ -16,6 +16,90 @@ namespace Coin.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.6");
 
+            modelBuilder.Entity("Coin.Domain.Entities.Address", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AddressType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Line1")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Line2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Coin.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("AppointmentTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("BookingId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DestinationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TravellingOut")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("DestinationId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("Coin.Domain.Entities.Basket", b =>
                 {
                     b.Property<long>("Id")
@@ -33,10 +117,55 @@ namespace Coin.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Basket");
+                });
+
+            modelBuilder.Entity("Coin.Domain.Entities.Booking", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Avaliable")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("CosmetologistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Duration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("FlatPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("HourRate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LongDesc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PayByHour")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ShortDesc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CosmetologistId");
+
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("Coin.Domain.Entities.Category", b =>
@@ -130,7 +259,7 @@ namespace Coin.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("Coin.Domain.Entities.Product", b =>
@@ -170,7 +299,7 @@ namespace Coin.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Coin.Domain.Identity.Administrator", b =>
@@ -308,6 +437,48 @@ namespace Coin.Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("Coin.Domain.Identity.Cosmetologist", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId")
+                        .IsUnique();
+
+                    b.ToTable("Cosmetologists");
+                });
+
+            modelBuilder.Entity("Coin.Domain.Identity.CosmetologistClient", b =>
+                {
+                    b.Property<long>("CosmetologistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CosmetologistId", "CustomerId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CosmetologistClients");
+                });
+
             modelBuilder.Entity("Coin.Domain.Identity.Customer", b =>
                 {
                     b.Property<long>("Id")
@@ -426,13 +597,48 @@ namespace Coin.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Coin.Domain.Entities.Address", b =>
+                {
+                    b.HasOne("Coin.Domain.Identity.ApplicationUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Coin.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("Coin.Domain.Entities.Booking", "Booking")
+                        .WithMany("Appointments")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coin.Domain.Identity.Customer", "Customer")
+                        .WithMany("Appointments")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coin.Domain.Entities.Address", "Destination")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Coin.Domain.Entities.Basket", b =>
                 {
                     b.HasOne("Coin.Domain.Identity.Customer", "Customer")
-                        .WithOne("Basket")
-                        .HasForeignKey("Coin.Domain.Entities.Basket", "CustomerId")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Coin.Domain.Entities.Booking", b =>
+                {
+                    b.HasOne("Coin.Domain.Identity.Cosmetologist", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("CosmetologistId");
                 });
 
             modelBuilder.Entity("Coin.Domain.Entities.Order", b =>
@@ -488,6 +694,28 @@ namespace Coin.Data.Migrations
                     b.HasOne("Coin.Domain.Identity.ApplicationUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Coin.Domain.Identity.Cosmetologist", b =>
+                {
+                    b.HasOne("Coin.Domain.Identity.ApplicationUser", "Identity")
+                        .WithOne("Cosmetologist")
+                        .HasForeignKey("Coin.Domain.Identity.Cosmetologist", "IdentityId");
+                });
+
+            modelBuilder.Entity("Coin.Domain.Identity.CosmetologistClient", b =>
+                {
+                    b.HasOne("Coin.Domain.Identity.Cosmetologist", "Cosmetologist")
+                        .WithMany("Clients")
+                        .HasForeignKey("CosmetologistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Coin.Domain.Identity.Customer", "Customer")
+                        .WithMany("Cosmetologists")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -18,12 +18,14 @@ namespace Coin.Data
 
         public string CurrentUserId { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Cosmetologist> Cosmetologists { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<CosmetologistClient> CosmetologistClients { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +43,21 @@ namespace Coin.Data
                 userRole.HasOne(ur => ur.User)
                     .WithMany(r => r.UserRoles)
                     .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
+            builder.Entity<CosmetologistClient>(cc =>
+            {
+                cc.HasKey(ur => new { ur.CosmetologistId, ur.CustomerId });
+
+                cc.HasOne(co => co.Cosmetologist)
+                    .WithMany(cu => cu.Clients)
+                    .HasForeignKey(co => co.CosmetologistId)
+                    .IsRequired();
+
+                cc.HasOne(cu => cu.Customer)
+                    .WithMany(co => co.Cosmetologists)
+                    .HasForeignKey(cu => cu.CustomerId)
                     .IsRequired();
             });
         }
